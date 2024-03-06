@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Light Pollution Map</title>
+<style>
+  #map {
+    position: relative;
+    width: 500px;
+    height: 500px;
+    border-radius: 50%;
+    border: 2px solid black;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px auto;
+  }
+  #map:before, #map:after {
+    content: '';
+    position: absolute;
+    background: black;
+  }
+  #map:before {
+    height: 2px;
+    width: 100%;
+  }
+  #map:after {
+    width: 2px;
+    height: 100%;
+  }
+  .star-count {
+    position: absolute;
+    text-align: center;
+    width: 50px;
+    height: 50px;
+    transform: translate(-50%, -50%);
+    cursor: pointer;
+  }
+</style>
+</head>
+<body>
+
+<div id="map" onclick="markStarCount(event)"></div>
+
+<script>
+  function markStarCount(event) {
+    const map = document.getElementById('map');
+    const x = event.pageX - map.offsetLeft;
+    const y = event.pageY - map.offsetTop;
+    const starCount = prompt("Enter the number of stars visible:");
+    const color = getColorBasedOnCount(starCount);
+    const marker = document.createElement('div');
+    marker.classList.add('star-count');
+    marker.style.left = `${x}px`;
+    marker.style.top = `${y}px`;
+    marker.style.background = color;
+    marker.textContent = starCount;
+    map.appendChild(marker);
+  }
+
+  function getColorBasedOnCount(count) {
+    if (count > 20) return 'green';
+    if (count > 10 && count <= 20) return 'yellow';
+    if (count > 0 && count <= 10) return 'red';
+    return 'gray'; // for invalid counts
+  }
+</script>
+
+</body>
+</html>
